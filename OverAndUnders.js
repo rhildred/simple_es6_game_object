@@ -2,18 +2,30 @@ const input = require('readline-sync');
 
 class Game{
     constructor(){
-        this.sPrompt = "What are you? ";
+        this.sPrompt = "I am thinking of a number between 1 and 100 ... can you guess it? ";
+        // Math.random() returns a number between 0 and 1 ... we round up
+        this.nComputer = Math.ceil(Math.random() * 100);
+        this.bDone = false;  
     }
     prompt(){
         return this.sPrompt;
     }
-    takeATurn(){
+    takeATurn(sInput){
         let aResponses = [];
-        aResponses.push("I know you are but what am I?");
+        if(isNaN(sInput)){
+            aResponses.push("Please enter a number");
+        }else if(sInput > this.nComputer){
+            aResponses.push("Too high");
+        }else if(sInput < this.nComputer){
+            aResponses.push("Too low");
+        }else{
+            aResponses.push("Correct");
+            this.bDone = true;   
+        }
         return aResponses;
     }
     isDone(){
-        return false;
+        return this.bDone;
     }
 }
 
